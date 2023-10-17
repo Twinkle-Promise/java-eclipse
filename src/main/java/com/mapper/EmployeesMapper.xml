@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.IEmployeesMapper">
+<insert id="save" parameterType="com.po.Employees">
+	insert into employees(empname,empsex,empaddress,birthday,emppicture,did) values(#{empname},#{empsex},#{empaddress},#{birthday},#{emppicture},#{did})
+</insert>
+<update id="update" parameterType="com.po.Employees">
+	update employees set empname=#{empname},empsex=#{empsex},empaddress=#{empaddress},birthday=#{birthday},emppicture=#{emppicture},did=#{did} where eid=#{eid}
+</update>
+<delete id="deleteById" parameterType="Integer">
+	delete from employees where eid=#{eid}
+</delete>
+<select id="findById" parameterType="Integer" resultType="com.po.Employees">
+	select a.*,b.depart from employees a,department b where a.did=b.did and eid=#{eid}
+</select>
+<select id="findPageAll" parameterType="com.po.PageSelect" resultType="com.po.Employees">
+	select a.*,b.depart from employees a,department b where a.did=b.did limit ${(page-1)*rows},${rows}
+</select>
+<select id="findMaxRows" resultType="Integer">
+	select count(*) from employees
+</select>
+<select id="findMaxEid" resultType="Integer">
+	select max(eid) from employees
+</select>
+</mapper>
